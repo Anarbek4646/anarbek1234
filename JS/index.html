@@ -19,8 +19,28 @@
               backgroundColor: 0xBBCCDD
             }
         );
+       document.body.appendChild(app.view)
 
-         document.body.appendChild(app.view)
+        let box = new PIXI.Graphics();
+     box.beginFill(0xccff99);
+     box.drawRect(0, 0, 64, 64);
+     box.endFill();
+     box.x = 96;
+     box.y = 96;
+     app.stage.addCihld( box );
+
+     app.ticker.add( (delta) => {
+         if (hitRectangle(cat, box) ){
+             box.tint = 0xff3300;
+         } else {
+             box.tint = 0xccff99;
+         }
+      } 
+      );
+
+ 
+///
+         
          player = new PIXI.Sprite.from("cookie.png");
          player.anchor.set(0.5);
          player.x = app.view.width / 2;
@@ -54,13 +74,13 @@
 
 
 //function for mouse
-  /*      function movePlayer(e) {
+       function movePlayer(e) {
             let pos = e.data.global;
 
             player.x = pos.x;
             player.y = pos.y;
         }
-*/
+//function for keyboard
         function gameLoop() {
             keysDiv.innerHTML = JSON.stringify(keys);
 
@@ -70,7 +90,7 @@
            }
            // a
            if(keys["65"]) {
-               player.x += 5;
+               player.x -= 5;
            }
            //s
            if(keys["83"]) {
@@ -82,6 +102,41 @@
            }
         }
 
+
+        function hitRectangle(r1, r2){
+     let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+
+     hit = false 
+
+     r1.centerX = r1.x + r1.width  / 2;
+     r1.centerX = r1.x + r1.height / 2;
+     r2.centerX = r2.x + r2.width  / 2;
+     r2.centerX = r2.x + r2.height / 2;    
+    
+    
+     r1.halfWidth = r1.x + r1.width  / 2;
+     r1.halfHeight = r1.x + r1.height / 2;
+     r2.halfWidth = r2.x + r2.width  / 2;
+     r2.halfHeight = r2.x + r2.height / 2;
+
+     vx = r1.centerX - r2.centerX  / 2;
+     vy = r1.centerY - r2.centerY / 2;  
+              
+
+     combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+     combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+
+     if (Math.abc(vx) < combinedHalfWidths) {
+
+        if (Math.abs(vy) < combinedHalfHeights) {
+            hit = true;
+        } else {
+            hit = false;
+        }
+     } else {
+         hit = false;
+     }
+    }
 
     </script>
 </head>
